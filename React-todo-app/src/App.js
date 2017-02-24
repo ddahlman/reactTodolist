@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import Title from './Title';
 import TodoForm from './TodoForm';
@@ -19,7 +19,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8080/php_files/api.php").then(
+    axios.get("http://localhost:80/php_files/api.php").then(
       (response) => {
         console.log(response);
         if (response.data === null) {
@@ -34,9 +34,9 @@ class App extends React.Component {
   addTodo(val) {
     //Asemble data
 
-    axios.post("http://localhost:8080/php_files/add.php?title=" + val).then((response) => {
+    axios.post("http://localhost:80/php_files/add.php?title=" + val).then((response) => {
 
-      axios.get("http://localhost:8080/php_files/api.php").then(
+      axios.get("http://localhost:80/php_files/api.php").then(
         (response) => {
           this.setState({ data: response.data });
         }
@@ -47,7 +47,7 @@ class App extends React.Component {
   }
   //Handle remove
   handleRemove(id) {
-    axios.delete("http://localhost:8080/php_files/delete.php?delete=" + id).then((response) => {
+    axios.delete("http://localhost:80/php_files/delete.php?delete=" + id).then((response) => {
 
       /* this.state.data.filter((todo) => {
          if (todo.id !== id) {
@@ -55,7 +55,7 @@ class App extends React.Component {
          }
        }
        );*/
-      axios.get("http://localhost:8080/php_files/api.php").then(
+      axios.get("http://localhost:80/php_files/api.php").then(
         (response) => {
 
           this.setState({ data: response.data });
@@ -65,14 +65,7 @@ class App extends React.Component {
     });
   }
 
-  componentDidMount() {
-axios.get("api.php").then(
-  (response) => {
-    console.log(response.data);
-    this.setState({items: response.data});
-  }
-);
-  }
+ 
 
   render() {
     return (
