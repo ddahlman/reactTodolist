@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // Container Component
 // Todo Id
-window.id = 0;
+
 class App extends React.Component {
   constructor(props) {
     //Pass props to parent class
@@ -17,27 +17,52 @@ class App extends React.Component {
       data: []
     }
   }
+
+  componentDidMount() {
+    axios.get("http://localhost:8080/php_files/api.php").then(
+      (response) => {
+        console.log(response);
+        if (response.data === null) {
+          response.data = [];
+        }
+        this.setState({ data: response.data });
+      }
+    );
+  }
+
   //Add todo handler
   addTodo(val) {
     //Asemble data
-    const todo = {
-      text: val,
-      id: window.id++
-    }
-    //Update data
-    this.state.data.push(todo);
-    //Update state
-    this.setState({ data: this.state.data });
+
+    axios.post("http://localhost:8080/php_files/add.php?title=" + val).then((response) => {
+
+      axios.get("http://localhost:8080/php_files/api.php").then(
+        (response) => {
+          this.setState({ data: response.data });
+        }
+      );
+
+    });
+
   }
   //Handle remove
   handleRemove(id) {
-    //Filter all todos except the one to be removed
-    const remainder = this.state.data.filter((todo) => {
-      if (todo.id !== id) return todo;
-    });
+    axios.delete("http://localhost:8080/php_files/delete.php?delete=" + id).then((response) => {
 
-    //Update state with filter
-    this.setState({ data: remainder });
+      /* this.state.data.filter((todo) => {
+         if (todo.id !== id) {
+           return todo;
+         }
+       }
+       );*/
+      axios.get("http://localhost:8080/php_files/api.php").then(
+        (response) => {
+
+          this.setState({ data: response.data });
+        }
+      );
+      /* this.setState({ data: this.state.data });*/
+    });
   }
 
   componentDidMount() {
