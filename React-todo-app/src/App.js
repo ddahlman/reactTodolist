@@ -3,6 +3,7 @@ import './App.css';
 import Title from './Title';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+import axios from 'axios';
 
 // Container Component
 // Todo Id
@@ -37,6 +38,15 @@ class App extends React.Component {
 
     //Update state with filter
     this.setState({ data: remainder });
+  }
+
+  componentDidMount() {
+axios.get("api.php").then(
+  (response) => {
+    console.log(response.data);
+    this.setState({items: response.data});
+  }
+);
   }
 
   render() {
