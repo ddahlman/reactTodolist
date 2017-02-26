@@ -19,20 +19,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:80/php_files/api.php").then(
-      (response) => {
-        console.log(response);
-        if (response.data === null) {
-          response.data = [];
-        }
-        this.setState({ data: response.data });
+    axios.get("http://localhost:80/php_files/api.php").then((response) => {
+      console.log(response.data);
+      if (response.data === "") {
+        response = Array;
       }
+      console.log(typeof response.data);
+      this.setState({ data: response.data });
+    }
     );
   }
 
   //Add todo handler
   addTodo(val) {
-    //Asemble data
 
     axios.post("http://localhost:80/php_files/add.php?title=" + val).then((response) => {
 
@@ -47,25 +46,15 @@ class App extends React.Component {
   }
   //Handle remove
   handleRemove(id) {
+    // return all todo whose id isn't the one I'm removing
+    const remainder = this.state.data.filter(todo => todo.id !== id);
+
     axios.delete("http://localhost:80/php_files/delete.php?delete=" + id).then((response) => {
-
-      /* this.state.data.filter((todo) => {
-         if (todo.id !== id) {
-           return todo;
-         }
-       }
-       );*/
-      axios.get("http://localhost:80/php_files/api.php").then(
-        (response) => {
-
-          this.setState({ data: response.data });
-        }
-      );
-      /* this.setState({ data: this.state.data });*/
+      this.setState({ data: remainder });
     });
   }
 
- 
+
 
   render() {
     return (

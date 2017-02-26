@@ -5,12 +5,11 @@ const Todo = ({todo, remove}) => {
     return (
 
         <li>
-            {todo.text}
+            {todo.title}
             <button
-            className="btn btn-danger btn-xs"
-             onClick={() => { remove(todo.id) }}> Ta bort
+                className="btn btn-danger btn-xs"
+                onClick={() => { remove(todo.id) }}> Ta bort
              </button>
-
         </li >
     );
 }
