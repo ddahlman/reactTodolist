@@ -20,14 +20,10 @@ class App extends React.Component {
 
   componentDidMount() {
     axios.get("http://localhost:80/php_files/api.php").then((response) => {
-      console.log(response.data);
-      if (response.data === "") {
-        response = Array;
-      }
-      console.log(typeof response.data);
       this.setState({ data: response.data });
-    }
-    );
+    }).catch((error) => {
+      console.log(error.response);
+    });
   }
 
   //Add todo handler
