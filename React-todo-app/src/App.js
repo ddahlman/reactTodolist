@@ -19,23 +19,21 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:80/php_files/api.php").then((response) => {
+    axios.get("http://localhost:8080/php_files/api.php").then((response) => {
       console.log(response.data);
-      if (response.data === "") {
-        response = Array;
-      }
+
       console.log(typeof response.data);
       this.setState({ data: response.data });
     }
-    );
+    ).catch((err) => { console.log(err) });
   }
 
   //Add todo handler
   addTodo(val) {
 
-    axios.post("http://localhost:80/php_files/add.php?title=" + val).then((response) => {
+    axios.post("http://localhost:8080/php_files/add.php?title=" + val).then((response) => {
 
-      axios.get("http://localhost:80/php_files/api.php").then(
+      axios.get("http://localhost:8080/php_files/api.php").then(
         (response) => {
           this.setState({ data: response.data });
         }
@@ -49,7 +47,7 @@ class App extends React.Component {
     // return all todo whose id isn't the one I'm removing
     const remainder = this.state.data.filter(todo => todo.id !== id);
 
-    axios.delete("http://localhost:80/php_files/delete.php?delete=" + id).then((response) => {
+    axios.delete("http://localhost:8080/php_files/delete.php?delete=" + id).then((response) => {
       this.setState({ data: remainder });
     });
   }
