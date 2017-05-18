@@ -1,2 +1,2 @@
 # reactTodolist
-Creating a small test todolist to get react going. practice makes perfect
+Creating a small test todolist to get react going. Practice makes perfect
