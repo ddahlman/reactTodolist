@@ -28,6 +28,7 @@ class App extends React.Component {
 
   }
 
+
   //Add todo handler
   addTodo(val) {
 
